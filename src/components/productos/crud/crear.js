@@ -55,8 +55,8 @@ export default class ProductosCrear extends React.Component {
         this.setState({ loading: true });
       });
   }
-  onExitedMessage () {
-    if (this.state.rediret) this.props.changeTab( 'buscar' );
+  onExitedMessage() {
+    if (this.state.rediret) this.props.changeTab("buscar");
   }
   render() {
     return (
@@ -106,6 +106,9 @@ export default class ProductosCrear extends React.Component {
             <Form.Group className="mb-3" controlId="formBasic">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
+                type="file"
+                multiple
+                accept="image/png,image/jpeg"
                 onChange={(e) => this.setValue("imagen", e.target.value)}
               />
             </Form.Group>
