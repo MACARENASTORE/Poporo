@@ -4,6 +4,7 @@ import "../productos.css";
 import { request } from "../../helper/helper";
 import Loading from "../../loading/loading";
 import MessagePrompt from "../../prompts/message";
+import { onUploadfiles } from "../../helper/onUploadFile";
 
 export default class ProductosCrear extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class ProductosCrear extends React.Component {
         ean: "",
         precio_pro: "",
         precio_vent: "",
-        imagen: "",
+        imagen: [],
       },
     };
     this.onExitedMessage = this.onExitedMessage.bind(this);
@@ -34,8 +35,16 @@ export default class ProductosCrear extends React.Component {
       },
     });
   }
-  guardarProductos() {
+
+  async guardarProductos() {
     this.setState({ loading: true });
+    const fotos = await onUploadfiles(this.state.producto.imagen);
+    this.setState({
+      producto: {
+        ...this.state.producto,
+      imagen: fotos[0],
+      },
+    });
     request
       .post("/productos", this.state.producto)
       .then((response) => {
@@ -107,9 +116,8 @@ export default class ProductosCrear extends React.Component {
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="file"
-                multiple
                 accept="image/png,image/jpeg"
-                onChange={(e) => this.setValue("imagen", e.target.value)}
+                onChange={(e) => this.setValue("imagen", e.target.files)}
               />
             </Form.Group>
             <Button

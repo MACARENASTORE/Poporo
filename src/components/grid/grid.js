@@ -114,6 +114,12 @@ export default class DataGrid extends React.Component {
             </div>
           )}
         </ToolkitProvider>
+          <div className='d-flex flex-wrap'>  {
+            this.state.rows.map((row, i) => (
+              <img key={i} src = { row.imagen } className= "w-25" alt="imagen" />
+            ))
+          }</div>
+        
       </>
     );
   }
